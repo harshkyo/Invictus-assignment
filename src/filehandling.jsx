@@ -1,5 +1,5 @@
 import { Component } from 'react';
-//import Frequency from './frequency.jsx';
+import Frequency from './frequency.jsx';
 
 class FileHandling extends Component {
     constructor (props) {
@@ -7,24 +7,31 @@ class FileHandling extends Component {
         this.state = {content: null};
     }
 
-    fetchFileData 
+    fetchFileData = () => {
+        fetch( `https://raw.githubusercontent.com/invictustech/test/main/README.md` )
+                .then((res) => res.text())
+                .then((text) => {
+                    this.setState({content: text.toString()
+                    .replace(/[^a-zA-Z0-9]/g, " ")
+                    .split(" ")
+                    });
+                })
+                return this.state.content;
+    }
+
+    componentDidMount() {
+        this.fetchFileData();
+    }
 
     render () {
-
         return (
-            // <div>
-            //     <h1>{this.props.num.number}</h1>
-            //     <h2>{this.props.num.status}</h2>
-            // </div>
-            fetch( `https://raw.githubusercontent.com/invictustech/test/main/README.md` )
-                .then((res) => res.text())
-                .then((text) => { 
-                   // console.log(text); 
-                    const arrayvar = text.toString()
-                    .replace(/[^a-zA-Z]/g, " ")
-                    .split(" ");
-                    console.log(arrayvar);
-                })
+            <div>
+                <h1>{this.props.num.number}</h1>
+                <h2>{this.props.num.status}</h2>
+                {console.log(this.state.content)}
+                <Frequency words = {this.state.content} />
+            </div>
+            
         );
     };
 }
