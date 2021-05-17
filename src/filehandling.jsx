@@ -1,5 +1,4 @@
 import { Component } from 'react';
-import Frequency from './frequency.jsx';
 
 class FileHandling extends Component {
     constructor (props) {
